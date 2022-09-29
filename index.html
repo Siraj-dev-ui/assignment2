@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      let appliedOperator = ''
+      let actionApplied = false
+      let logs = []
+      function performAction(event){
+        
+        
+        let operators = ['+', '-', 'x' , '/']
+        // let performAction = false
+        
+        let action = event.target.innerText
+        let input = document.getElementById('input')
+        
+        if(operators.indexOf(action) > -1){
+          if(!actionApplied){
+          appliedOperator = action
+          actionApplied = true
+            input.value += action
+            
+        }
+        return
+        }
+        if(action === '='){
+          performOperation(input)
+          return                        
+        }
+        input.value += action
+
+      }
+
+      function performOperation(input){
+        // debugger
+        console.log(input.value)
+        actionApplied = false
+        let arr = input.value.split(appliedOperator)
+        let v1 = parseFloat(arr[0])
+        let v2 = parseFloat(arr[1])
+        switch(appliedOperator){
+          case '+':
+            input.value =v1 + v2
+            break
+          case '-':
+            input.value =v1 - v2
+            break
+          case 'x':
+           input.value = v1 * v2
+            break
+          case '/':
+            input.value =v1 / v2
+            break
+            
+        }
+        logs.push({log : v1 +appliedOperator + v2 + '=' + input.value})
+        // saveLogs()
+      }
+    function clearInput(){
+      document.getElementById('input').value = ''
+    }
+
+    function saveLogs(){
+
+    }
+
+    function displayLogs(){
+      logs.forEach(element => {
+        console.log(element)
+      });
+    }
+    </script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+
+
+</head>
+<body class="bg-black">
+  <div class="w-full h-[100vh] flex justify-center items-center">
+    <div class="w-[35%] bg-gray-200">
+
+      <header class="uppercase bg-slate-400 p-3 font-bold ">
+        
+        calculator
+      </header>
+      <div>
+        <input type="text" disabled id='input' placeholder="0" class="w-full p-3 outline-none text-gray-700 font-bold text-lg bg-gray-200">
+      </div>
+      <div class="flex justify-between text-center">
+        <span onclick="clearInput()" class="m-[3px] p-3 text-center w-full bg-white bg-[#404040] font-bold text-white">CLEAR</span>
+        <!-- <span onclick="sumArray()" class="m-[3px] p-3 bg-white w-full bg-[#404040] font-bold text-white">SUM ARRAY</span> -->
+        <span onclick="displayLogs()" class="m-[3px] p-3 bg-white  w-full bg-[#404040] font-bold text-white">DISPLAY LOGS</span>
+        
+      </div>
+      <div class="flex justify-between text-center">
+        <span onclick="performAction(event)" class="m-[3px] p-3 text-center w-full bg-white">7</span>
+        <span onclick="performAction(event)" class="m-[3px] p-3 bg-white w-full">8</span>
+        <span onclick="performAction(event)" class="m-[3px] p-3 bg-white  w-full">9</span>
+        <span onclick="performAction(event)" class="m-[3px] p-3 bg-white  w-full text-2xl bg-gray-100">x</span>
+      </div>
+      <div class="flex justify-between text-center">
+        <span onclick="performAction(event)" class="m-[3px] p-3 text-center w-full bg-white">4</span>
+        <span onclick="performAction(event)" class="m-[3px] p-3 bg-white w-full">5</span>
+        <span onclick="performAction(event)" class="m-[3px] p-3 bg-white  w-full">6</span>
+        <span onclick="performAction(event)" class="m-[3px] p-3 bg-white  w-full text-2xl bg-gray-100">-</span>
+      </div>
+      <div class="flex justify-between text-center">
+        <span onclick="performAction(event)" class="m-[3px] p-3 w-full bg-white">1</span>
+        <span onclick="performAction(event)" class="m-[3px] p-3 bg-white w-full">2</span>
+        <span onclick="performAction(event)" class="m-[3px] p-3 bg-white  w-full">3</span>
+        <span onclick="performAction(event)" class="m-[3px] p-3 bg-white  w-full text-2xl bg-gray-100">+</span>
+      </div>
+      <div class="flex justify-between text-center">
+        <span onclick="performAction(event)" class="m-[3px] p-3 w-full bg-white">/</span>
+        <span onclick="performAction(event)" class="m-[3px] p-3 bg-white w-full">0</span>
+        <span onclick="performAction(event)" class="m-[3px] p-3 bg-white  w-full">.</span>
+        <span onclick="performAction(event)" class="m-[3px] p-3 bg-white  w-full text-2xl bg-blue-300">=</span>
+      </div>
+      
+    </div>
+</div>
+</body>
+</html>
